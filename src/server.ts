@@ -11,7 +11,7 @@ export class Server {
     private prisma: PrismaClient;
 
     constructor({ brokers, clientId, group }: {brokers?: string[], clientId?: string, group?: string}){
-        this.brokers = brokers ? brokers : process.env.KAFKA_BROKERS ? process.env.KAFKA_BROKERS.split(',') : ['localhost:9092']
+        this.brokers = brokers ? brokers : process.env.KAFKA_BROKERS ? process.env.KAFKA_BROKERS.split(',').map(broker => `${broker}:9092`) : ['localhost:9092']
         this.clientId = clientId ? clientId : process.env.KAFKA_CLIENT_ID ? process.env.KAFKA_CLIENT_ID : "CHAT_MESSAGES_SERVER";
         this.group = group ? group : process.env.KAFKA_CONSUMER_GROUP ? process.env.KAFKA_CONSUMER_GROUP : "chatserver-messages";
 
